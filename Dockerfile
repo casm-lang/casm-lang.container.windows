@@ -23,7 +23,9 @@
 
 FROM cirrusci/windowsservercore:2016
 
-RUN choco install -y msys2
+RUN choco upgrade chocolatey -y
+
+RUN choco install msys2 -y
 
 # choco install -y visualstudio2017-workload-vctools \
 # --package-parameters "--no-includeRecommended"; \
