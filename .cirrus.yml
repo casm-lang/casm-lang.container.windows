@@ -1,0 +1,37 @@
+#
+#   Copyright (C) 2018 CASM Organization <https://casm-lang.org>
+#   All rights reserved.
+#
+#   Developed by: Philipp Paulweber
+#                 <https://github.com/casm-lang/casm-lang.container.windows>
+#
+#   This file is part of casm-lang.container.windows.
+#
+#   casm-lang.container.windows is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   casm-lang.container.windows is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
+#
+
+docker_builder:
+  platform: windows
+  os_version: 2016
+  name: deploy
+  only_if: $CIRRUS_BRANCH == 'master'
+  env:
+    DOCKER_USERNAME: ENCRYPTED[c2d5a42b615e84e90dac0e5a7a73232d539988265fa0c0950e9ee5ea2bb801ecd1c2e68da0d9fe50f2d5620cf515126d]
+    DOCKER_PASSWORD: ENCRYPTED[03c22b1d00337b52c7af4786c9db7ff3145f69217c5c7f3aa03b0a287bc080b1207f5ac9b78a5279a0c714908cfd867a]
+  build_script:
+    - docker build --tag casmlang/container.windows:latest .
+  login_script:
+    - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+  push_script:
+    - docker push casmlang/container.windows:latest
