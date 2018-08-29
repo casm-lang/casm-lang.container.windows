@@ -23,13 +23,11 @@
 
 FROM cirrusci/windowsservercore:2016
 
-RUN powershell -Command \
-    netsh interface ipv4 show interfaces ; \
+RUN netsh interface ipv4 show interfaces ; \
     netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
-    Set-ExecutionPolicy Bypass -Scope Process -Force; \
-    choco install msys2 -y --no-progress --params '"/InstallDir=C:\" /NoUpdate'
+    choco install msys2 -y --no-progress --params '"/InstallDir=C:\\root" /NoUpdate'
 
-# choco install -y visualstudio2017-workload-vctools \
+# choco install visualstudio2017-workload-vctools -y --no-progress \
 # --package-parameters "--no-includeRecommended"; \
 
 CMD ["cmd"]
