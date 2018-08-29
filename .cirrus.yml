@@ -32,6 +32,7 @@ docker_builder:
   build_script:
     - docker build --tag casmlang/container.windows:latest .
   login_script:
-    - powershell -Command docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+    - docker logout
+    - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
   push_script:
     - docker push casmlang/container.windows:latest
