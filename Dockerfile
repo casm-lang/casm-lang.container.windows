@@ -23,9 +23,7 @@
 
 FROM cirrusci/windowsservercore:2016
 
-RUN choco install -y msys2; \
-    Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
-    Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
+RUN choco install -y msys2
 
 # choco install -y visualstudio2017-workload-vctools \
 # --package-parameters "--no-includeRecommended"; \
