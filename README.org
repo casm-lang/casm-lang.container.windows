@@ -25,6 +25,8 @@
 
 Provides a =Dockerfile= which creates a C++ build environment for Windows.
 
+** Status [[https://cirrus-ci.com/github/casm-lang/casm-lang.container.windows][https://api.cirrus-ci.com/github/casm-lang/casm-lang.container.windows.svg]]
+
 TBD
 
 
