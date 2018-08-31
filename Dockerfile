@@ -39,7 +39,6 @@ RUN powershell -Command \
 
 RUN powershell -Command \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     choco install msys2 -y --no-progress \
     --params '"/InstallDir=C:\\root" /NoUpdate' ; \
     $env:PATH = 'C:\root\usr\bin' + $env:PATH ; \
@@ -49,7 +48,6 @@ RUN powershell -Command \
 
 RUN powershell -Command \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     pacman -Su --noconfirm ; \
     pacman -S  --noconfirm \
     make \

@@ -24,14 +24,10 @@ REM
 
 if "%~1"=="build" goto :build
 if "%~1"=="deploy" goto :deploy
-if "%~1"=="" goto :missing_target
+if "%~1"=="" goto :usage
 
 :usage
     echo usage: %~nx0 {build,deploy}
-    goto :eof
-
-:missing_target
-    call :usage
     goto :eof
 
 :build
