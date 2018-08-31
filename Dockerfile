@@ -26,29 +26,15 @@ FROM cirrusci/windowsservercore:2016
 RUN powershell -Command \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
     netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
-    choco install visualstudio2017-workload-vctools -y --no-progress \
-    --package-parameters "--no-includeRecommended" ; \
-    $env:PATH = \
-    'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin' + \
-    $env:PATH ; \
-    $env:PATH = \
-    'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build' + \
-    $env:PATH ; \
-    [Environment]::SetEnvironmentVariable( 'PATH', \
-    $env:PATH, [EnvironmentVariableTarget]::Machine )
-
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    choco install msys2 -y --no-progress \
-    --params '"/InstallDir=C:\\root" /NoUpdate' ; \
+    choco install visualstudio2017-workload-vctools -y --no-progress --package-parameters "--no-includeRecommended" ; \
+    $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin' + $env:PATH ; \
+    $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build' + $env:PATH ; \
+    choco install msys2 -y --no-progress --params '"/InstallDir=C:\\root" /NoUpdate' ; \
     $env:PATH = 'C:\root\usr\bin' + $env:PATH ; \
-    [Environment]::SetEnvironmentVariable( 'PATH', \
-    $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
-    pacman -Syu --noconfirm
+    [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    pacman -Su --noconfirm ; \
+RUN echo %PATH%; \
+    pacman -Syu --noconfirm ; \
     pacman -S  --noconfirm \
     make \
     curl \
