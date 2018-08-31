@@ -20,15 +20,20 @@
 #   You should have received a copy of the GNU General Public License
 #   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
 # 
+[[https://github.com/casm-lang/casm-lang.logo/raw/master/etc/headline.png]]
 
-* Windows Docker Container C++ Build Environment
+#+options: toc:nil
+
+* Windows C++ Build Environment
 
 Provides a =Dockerfile= which creates a C++ build environment for Windows.
+which is pushed after a successful build automatically to 
+https://hub.docker.com/r/casmlang/container.windows.
 
 ** Status [[https://cirrus-ci.com/github/casm-lang/casm-lang.container.windows][https://api.cirrus-ci.com/github/casm-lang/casm-lang.container.windows.svg]]
 
-TBD
-
+The docker container provides a C++ development environment with the following tools:
+ =sh=, =bash=, =make=, =cmake=, =flex=, =bison, =gcc=, =clang=, and =msvc=.
 
 ** Copyright and License
 
