@@ -24,15 +24,53 @@
 FROM cirrusci/windowsservercore:2016
 
 RUN powershell -Command \
-    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    choco install visualstudio2017-workload-vctools \
-    -y --no-progress --package-parameters "--no-includeRecommended"
+    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
+    choco install visualstudio2017-workload-vctools -y --no-progress \
+    --package-parameters "--no-includeRecommended" ; \
+    $env:PATH = \
+    'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin' + \
+    $env:PATH ; \
+    $env:PATH = \
+    'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build' + \
+    $env:PATH ; \
+    [Environment]::SetEnvironmentVariable( 'PATH', \
+    $env:PATH, [EnvironmentVariableTarget]::Machine )
 
 RUN powershell -Command \
-    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    choco install msys2 \
-    -y --no-progress --params '"/InstallDir=C:\\root" /NoUpdate' ; \
+    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
+    choco install msys2 -y --no-progress \
+    --params '"/InstallDir=C:\\root" /NoUpdate' ; \
+    $env:PATH = 'C:\root\usr\bin' + $env:PATH ; \
+    [Environment]::SetEnvironmentVariable( 'PATH', \
+    $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
+    pacman -Syu --noconfirm
+
+RUN powershell -Command \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
+    pacman -Su --noconfirm ; \
+    pacman -S  --noconfirm \
+    make \
+    curl \
+    wget \
+    tar \
+    python \
+    bison \
+    flex \
+    python \
+    mingw-w64-i686-gcc \
+    mingw-w64-i686-gdb \
+    mingw-w64-i686-clang \
+    mingw-w64-i686-clang-analyzer \
+    mingw-w64-i686-clang-tools-extra \
+    mingw-w64-i686-lldb \
+    mingw-w64-x86_64-gcc \
+    mingw-w64-x86_64-gdb \
+    mingw-w64-x86_64-clang \
+    mingw-w64-x86_64-clang-analyzer \
+    mingw-w64-x86_64-clang-tools-extra \
+    mingw-w64-x86_64-lldb
 
 CMD ["cmd"]
