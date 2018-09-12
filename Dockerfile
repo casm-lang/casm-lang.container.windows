@@ -32,7 +32,8 @@ RUN powershell -Command \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
 RUN powershell -Command \
-    choco install msys2 -y --no-progress --version 20180531.0.0 --params "/NoUpdate /NoPath"; \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+    choco install msys2 -y --no-progress --version 20180531.0.0 --params '"/NoUpdate /NoPath"'; \
     $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
