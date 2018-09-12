@@ -29,7 +29,7 @@ RUN powershell -Command \
     choco install visualstudio2017-workload-vctools -y --no-progress --package-parameters "--no-includeRecommended" ; \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin;' + $env:PATH ; \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build;' + $env:PATH ; \
-    choco install msys2 -y --no-progress --params '"/InstallDir=C:\\root" /NoUpdate' ; \
+    choco install msys2 -y --no-progress --params '"/InstallDir=C:\root" /NoUpdate' ; \
     $env:PATH = 'C:\root\usr\bin;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
@@ -37,6 +37,7 @@ RUN echo %PATH%; \
     pacman -Syu --noconfirm ; \
     pacman -S  --noconfirm \
     make \
+    bash \
     curl \
     wget \
     tar \
@@ -44,12 +45,14 @@ RUN echo %PATH%; \
     bison \
     flex \
     python \
+    mingw-w64-i686-cmake \
     mingw-w64-i686-gcc \
     mingw-w64-i686-gdb \
     mingw-w64-i686-clang \
     mingw-w64-i686-clang-analyzer \
     mingw-w64-i686-clang-tools-extra \
     mingw-w64-i686-lldb \
+    mingw-w64-x86_64-cmake \
     mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-gdb \
     mingw-w64-x86_64-clang \
