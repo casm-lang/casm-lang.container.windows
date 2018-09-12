@@ -31,7 +31,8 @@ RUN powershell -Command \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
-RUN choco install msys2 -y --no-progress --version 20180531.0.0 --params "/NoUpdate /NoPath"; \
+RUN powershell -Command \
+    choco install msys2 -y --no-progress --version 20180531.0.0 --params "/NoUpdate /NoPath"; \
     $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
