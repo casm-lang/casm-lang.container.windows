@@ -29,7 +29,9 @@ RUN powershell -Command \
     choco install visualstudio2017-workload-vctools -y --no-progress --package-parameters "--no-includeRecommended" ; \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin;' + $env:PATH ; \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build;' + $env:PATH ; \
-    choco install msys2 -y --no-progress --params '/NoUpdate' ; \
+    [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
+
+RUN choco install msys2 -y --no-progress --version 20180531.0.0 --params "/NoUpdate /NoPath"; \
     $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
