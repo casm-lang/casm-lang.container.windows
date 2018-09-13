@@ -42,25 +42,25 @@ RUN powershell -Command \
     Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
     Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
 
-# RUN powershell -Command \
-#     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-#     echo $env:PATH ; \
-#     pacman -Syu --noconfirm
-# 
-# RUN powershell -Command \
-#     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-#     echo $env:PATH ; \
-#     pacman -S  --noconfirm \
-#     make \
-#     bash \
-#     curl \
-#     wget \
-#     tar \
-#     python \
-#     bison \
-#     flex \
-#     python
-# 
+RUN powershell -Command \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+    echo $env:PATH ; \
+    pacman -Syu --noconfirm
+
+RUN powershell -Command \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+    echo $env:PATH ; \
+    pacman -S  --noconfirm \
+    make \
+    bash \
+    curl \
+    wget \
+    tar \
+    python \
+    bison \
+    flex \
+    python
+
 # RUN powershell -Command \
 #     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
 #     echo $env:PATH ; \
