@@ -61,28 +61,28 @@ RUN powershell -Command \
     flex \
     python
 
-# RUN powershell -Command \
-#     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-#     echo $env:PATH ; \
-#     pacman -S  --noconfirm \
-#     mingw-w64-i686-cmake \
-#     mingw-w64-i686-gcc \
-#     mingw-w64-i686-gdb \
-#     mingw-w64-i686-clang \
-#     mingw-w64-i686-clang-analyzer \
-#     mingw-w64-i686-clang-tools-extra \
-#     mingw-w64-i686-lldb
-# 
-# RUN powershell -Command \
-#     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-#     echo $env:PATH ; \
-#     pacman -S  --noconfirm \
-#     mingw-w64-x86_64-cmake \
-#     mingw-w64-x86_64-gcc \
-#     mingw-w64-x86_64-gdb \
-#     mingw-w64-x86_64-clang \
-#     mingw-w64-x86_64-clang-analyzer \
-#     mingw-w64-x86_64-clang-tools-extra \
-#     mingw-w64-x86_64-lldb
+RUN powershell -Command \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+    echo $env:PATH ; \
+    pacman -S  --noconfirm \
+    mingw-w64-i686-cmake \
+    mingw-w64-i686-gcc \
+    mingw-w64-i686-gdb \
+    mingw-w64-i686-clang \
+    mingw-w64-i686-clang-analyzer \
+    mingw-w64-i686-clang-tools-extra \
+    mingw-w64-i686-lldb
+
+RUN powershell -Command \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+    echo $env:PATH ; \
+    pacman -S  --noconfirm \
+    mingw-w64-x86_64-cmake \
+    mingw-w64-x86_64-gcc \
+    mingw-w64-x86_64-gdb \
+    mingw-w64-x86_64-clang \
+    mingw-w64-x86_64-clang-analyzer \
+    mingw-w64-x86_64-clang-tools-extra \
+    mingw-w64-x86_64-lldb
 
 CMD ["cmd"]
