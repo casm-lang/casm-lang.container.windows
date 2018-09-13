@@ -25,10 +25,9 @@ docker_builder:
   name: build and deploy
   platform: windows
   os_version: 2016
-  timeout_in: 90m
   only_if: $CIRRUS_BRANCH == 'master'
   env:
-    DOCKER_TAG: casmlang/container.windows:latest
+    DOCKER_IMAGETAG: casmlang/container.windows:latest
     DOCKER_USERNAME: ENCRYPTED[c2d5a42b615e84e90dac0e5a7a73232d539988265fa0c0950e9ee5ea2bb801ecd1c2e68da0d9fe50f2d5620cf515126d]
     DOCKER_PASSWORD: ENCRYPTED[35f1572ea1987a63dcb166ee1dccbd84633b6fa61a08505e2fc42caf61337d182de5d5cfa21d575467af1387a0c9c089]
   build_script:

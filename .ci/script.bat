@@ -31,13 +31,14 @@ if "%~1"=="" goto :usage
     goto :eof
 
 :build
-    echo docker build --tag %DOCKER_TAG% .
-    docker build --tag %DOCKER_TAG% .
+    echo docker building '%DOCKER_IMAGETAG%'
+    docker pull %DOCKER_IMAGETAG% || true
+    docker build --cache-from %DOCKER_IMAGETAG% --tag %DOCKER_IMAGETAG% .
     goto :eof
 
 :deploy
-    echo docker logout, login and push %DOCKER_TAG%
+    echo docker logout, login and pushing '%DOCKER_IMAGETAG%'
     docker logout
     docker login --username %DOCKER_USERNAME% --password %DOCKER_PASSWORD%
-    docker push %DOCKER_TAG%
+    docker push %DOCKER_IMAGETAG%
     goto :eof
