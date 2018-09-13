@@ -34,7 +34,10 @@ RUN powershell -Command \
     $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
     Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
-    Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse ; \
+    Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
+
+RUN powershell -Command \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
     echo $env:PATH ; \
     pacman -Syu --noconfirm ; \
     pacman -S  --noconfirm \
