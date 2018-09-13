@@ -25,6 +25,7 @@ docker_builder:
   name: build and deploy
   platform: windows
   os_version: 2016
+  timeout_in: 90m
   only_if: $CIRRUS_BRANCH == 'master'
   env:
     DOCKER_TAG: casmlang/container.windows:latest
