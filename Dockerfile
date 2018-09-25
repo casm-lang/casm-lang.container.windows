@@ -26,7 +26,7 @@ FROM microsoft/nanoserver
 RUN powershell -Command \
     netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     netsh interface ipv4 show interfaces ; \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ;
+    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
     Invoke-WebRequest https://chocolatey.org/install.ps1 -OutFile .\install.ps1 ; \
     .\install.ps1 ; \
     Remove-Item .\install.ps1 -Force ; \
