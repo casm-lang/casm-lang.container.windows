@@ -21,24 +21,16 @@
 #   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM microsoft/nanoserver:ltsc2016
+FROM microsoft/nanoserver
 
 RUN powershell -Command \
     netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     netsh interface ipv4 show interfaces ; \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
-    choco install -y git ; \
+    choco install git -y ; \
     choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2" /NoUpdate /NoPath' ; \
-    $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
-    [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
-    Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
-    Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
-
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
-    netsh interface ipv4 show interfaces ; \
     choco install visualstudio2017-workload-vctools -y --no-progress --package-parameters "--no-includeRecommended" ; \
+    $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin;' + $env:PATH ; \
     $env:PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build;' + $env:PATH ; \
     [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
@@ -48,8 +40,8 @@ RUN powershell -Command \
 RUN powershell -Command \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
     echo $env:PATH ; \
-    pacman -Syu --noconfirm ; \
-    pacman -S  --noconfirm \
+    pacman --noconfirm -Syu ; \
+    pacman --noconfirm -S \
     make \
     bash \
     curl \
@@ -72,6 +64,7 @@ RUN powershell -Command \
     mingw-w64-x86_64-clang \
     mingw-w64-x86_64-clang-analyzer \
     mingw-w64-x86_64-clang-tools-extra \
-    mingw-w64-x86_64-lldb
+    mingw-w64-x86_64-lldb ; \
+    rmdir C:\msys2\var\cache\pacman /s /q
 
 CMD ["cmd"]
