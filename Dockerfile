@@ -21,7 +21,18 @@
 #   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM cirrusci/windowsservercore:2016
+FROM microsoft/nanoserver:ltsc2016
+
+RUN powershell -Command \
+    netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
+    netsh interface ipv4 show interfaces ; \
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
+    choco install -y git ; \
+    choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2" /NoUpdate /NoPath' ; \
+    $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
+    [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
+    Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
+    Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
 
 RUN powershell -Command \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
@@ -36,20 +47,8 @@ RUN powershell -Command \
 
 RUN powershell -Command \
     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2" /NoUpdate /NoPath' ; \
-    $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
-    [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine ) ; \
-    Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
-    Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
-
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
     echo $env:PATH ; \
-    pacman -Syu --noconfirm
-
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    echo $env:PATH ; \
+    pacman -Syu --noconfirm ; \
     pacman -S  --noconfirm \
     make \
     bash \
@@ -59,24 +58,14 @@ RUN powershell -Command \
     python \
     bison \
     flex \
-    python
-
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    echo $env:PATH ; \
-    pacman -S  --noconfirm \
+    python \
     mingw-w64-i686-cmake \
     mingw-w64-i686-gcc \
     mingw-w64-i686-gdb \
     mingw-w64-i686-clang \
     mingw-w64-i686-clang-analyzer \
     mingw-w64-i686-clang-tools-extra \
-    mingw-w64-i686-lldb
-
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    echo $env:PATH ; \
-    pacman -S  --noconfirm \
+    mingw-w64-i686-lldb \
     mingw-w64-x86_64-cmake \
     mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-gdb \
