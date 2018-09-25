@@ -26,7 +26,10 @@ FROM microsoft/nanoserver
 RUN powershell -Command \
     netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
     netsh interface ipv4 show interfaces ; \
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
+    Set-ExecutionPolicy Bypass -Scope Process -Force ;
+    Invoke-WebRequest https://chocolatey.org/install.ps1 -OutFile .\install.ps1 ; \
+    .\install.ps1 ; \
+    Remove-Item .\install.ps1 -Force ; \
     choco install git -y ; \
     choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2" /NoUpdate /NoPath' ; \
     choco install visualstudio2017-workload-vctools -y --no-progress --package-parameters "--no-includeRecommended" ; \
@@ -37,34 +40,34 @@ RUN powershell -Command \
     Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
     Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
 
-RUN powershell -Command \
-    Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-    echo $env:PATH ; \
-    pacman --noconfirm -Syu ; \
-    pacman --noconfirm -S \
-    make \
-    bash \
-    curl \
-    wget \
-    tar \
-    python \
-    bison \
-    flex \
-    python \
-    mingw-w64-i686-cmake \
-    mingw-w64-i686-gcc \
-    mingw-w64-i686-gdb \
-    mingw-w64-i686-clang \
-    mingw-w64-i686-clang-analyzer \
-    mingw-w64-i686-clang-tools-extra \
-    mingw-w64-i686-lldb \
-    mingw-w64-x86_64-cmake \
-    mingw-w64-x86_64-gcc \
-    mingw-w64-x86_64-gdb \
-    mingw-w64-x86_64-clang \
-    mingw-w64-x86_64-clang-analyzer \
-    mingw-w64-x86_64-clang-tools-extra \
-    mingw-w64-x86_64-lldb ; \
-    rmdir C:\msys2\var\cache\pacman /s /q
+# RUN powershell -Command \
+#     Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+#     echo $env:PATH ; \
+#     pacman --noconfirm -Syu ; \
+#     pacman --noconfirm -S \
+#     make \
+#     bash \
+#     curl \
+#     wget \
+#     tar \
+#     python \
+#     bison \
+#     flex \
+#     python \
+#     mingw-w64-i686-cmake \
+#     mingw-w64-i686-gcc \
+#     mingw-w64-i686-gdb \
+#     mingw-w64-i686-clang \
+#     mingw-w64-i686-clang-analyzer \
+#     mingw-w64-i686-clang-tools-extra \
+#     mingw-w64-i686-lldb \
+#     mingw-w64-x86_64-cmake \
+#     mingw-w64-x86_64-gcc \
+#     mingw-w64-x86_64-gdb \
+#     mingw-w64-x86_64-clang \
+#     mingw-w64-x86_64-clang-analyzer \
+#     mingw-w64-x86_64-clang-tools-extra \
+#     mingw-w64-x86_64-lldb ; \
+#     Remove-Item C:\msys2\var\cache\pacman -Force -Recurse
 
 CMD ["cmd"]
