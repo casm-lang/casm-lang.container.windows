@@ -26,7 +26,7 @@ FROM microsoft/windowsservercore:ltsc2016
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
 ;   netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent \
 ;   netsh interface ipv4 show interfaces \
-;   iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) \
+;   iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
 ;   choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2"' \
