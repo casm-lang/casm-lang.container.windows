@@ -24,12 +24,23 @@
 FROM cirrusci/windowsservercore:2016
 
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
-;   choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2"' \
+;   netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent \
+;   netsh interface ipv4 show interfaces \
+;   choco install 7zip -y --no-progress \
+;   Invoke-WebRequest -uri 'http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz' \
+    -outfile msys2.tar.xz -verbose \
+;   7z x msys2.tar.xz \
+;   7z x msys2.tar \
+;   ren msys64 msys2 \
+;   Remove-Item C:\msys2.tar -Force -Recurse \
 ;   Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse \
-;   Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
+;   Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse \
+;   $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH \
+;   [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
 ;   echo $env:PATH \
+;   pacman --noconfirm -Syu \
 ;   pacman --noconfirm -S \
     make \
     bash \
