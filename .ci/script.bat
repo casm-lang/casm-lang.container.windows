@@ -33,7 +33,8 @@ if "%~1"=="" goto :usage
 :build
     echo docker building '%DOCKER_IMAGETAG%'
     docker pull %DOCKER_IMAGETAG% || true
-    docker build --cache-from %DOCKER_IMAGETAG% --tag %DOCKER_IMAGETAG% .
+REM docker build --cache-from %DOCKER_IMAGETAG% --tag %DOCKER_IMAGETAG% .
+    docker build --tag %DOCKER_IMAGETAG% .
     goto :eof
 
 :deploy
