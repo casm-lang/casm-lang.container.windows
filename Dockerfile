@@ -21,27 +21,31 @@
 #   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM cirrusci/windowsservercore:2016
+FROM microsoft/windowsservercore:ltsc2016
 
-RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
-;   netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent \
-;   netsh interface ipv4 show interfaces \
-;   choco install 7zip -y --no-progress \
-;   Invoke-WebRequest -uri 'http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz' \
-    -outfile msys2.tar.xz -verbose \
-;   7z x msys2.tar.xz \
-;   7z x msys2.tar \
-;   ren msys64 msys2 \
-;   Remove-Item C:\msys2.tar -Force -Recurse \
-;   Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse \
-;   Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse \
-;   $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH \
-;   [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
+RUN \
+powershell -Command \
+netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
+netsh interface ipv4 show interfaces ; \
+Set-ExecutionPolicy Bypass -Scope Process -Force ; \
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
+choco install git -y ; \
+choco install 7zip -y ; \
+Invoke-WebRequest -uri 'http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz' -outfile msys2.tar.xz -verbose ; \
+7z x msys2.tar.xz ; \
+7z x msys2.tar ; \
+ren msys64 msys2 ; \
+Remove-Item C:\msys2.tar -Force -Recurse ; \
+Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
+Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse ; \
+$env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
+[Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
-RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
-;   echo $env:PATH \
-;   pacman --noconfirm -Syu \
-;   pacman --noconfirm -S \
+RUN \
+powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
+echo $env:PATH ; \
+pacman --noconfirm -Syu ; \
+pacman --noconfirm -S \
     make \
     bash \
     curl \
@@ -64,7 +68,7 @@ RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
     mingw-w64-x86_64-clang \
     mingw-w64-x86_64-clang-analyzer \
     mingw-w64-x86_64-clang-tools-extra \
-    mingw-w64-x86_64-lldb \
-;   Remove-Item C:\msys2\var\cache\pacman -Force -Recurse
+    mingw-w64-x86_64-lldb ; \
+Remove-Item C:\msys2\var\cache\pacman -Force -Recurse
 
 CMD ["cmd"]
