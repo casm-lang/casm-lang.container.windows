@@ -21,20 +21,20 @@
 #   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM cirrusci/windowsservercore:2016
+FROM microsoft/windowsservercore:ltsc2016
 
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
 ;   netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent \
 ;   netsh interface ipv4 show interfaces \
-;   choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2" /NoUpdate /NoPath' \
-;   $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH \
-;   [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine ) \
+;   iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) \
+
+RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
+;   choco install msys2 -y --no-progress --params '"/InstallDir=C:\msys2"' \
 ;   Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse \
 ;   Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse
 
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
 ;   echo $env:PATH \
-;   pacman --noconfirm -Syu \
 ;   pacman --noconfirm -S \
     make \
     bash \
