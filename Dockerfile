@@ -21,21 +21,14 @@
 #   along with casm-lang.container.windows. If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM microsoft/windowsservercore:ltsc2016
+FROM cirrusci/windowsservercore:2019
 
 RUN \
 powershell -Command \
 netsh interface ipv4 set subinterface 18 mtu=1460 store=persistent ; \
 netsh interface ipv4 show interfaces ; \
 Set-ExecutionPolicy Bypass -Scope Process -Force ; \
-iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
-choco install git -y ; \
-choco install 7zip -y ; \
-Invoke-WebRequest -uri 'http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz' -outfile msys2.tar.xz -verbose ; \
-7z x msys2.tar.xz ; \
-7z x msys2.tar ; \
-ren msys64 msys2 ; \
-Remove-Item C:\msys2.tar -Force -Recurse ; \
+choco install msys2 -y --params="'/InstallDir:C:\msys2'" ; \
 Remove-Item C:\ProgramData\chocolatey\logs -Force -Recurse ; \
 Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse ; \
 $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
@@ -55,6 +48,7 @@ pacman --noconfirm -S \
     bison \
     flex \
     python \
+    diff \
     mingw-w64-i686-cmake \
     mingw-w64-i686-gcc \
     mingw-w64-i686-gdb \
