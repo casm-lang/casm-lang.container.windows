@@ -31,6 +31,6 @@ docker_builder:
     DOCKER_USERNAME: ENCRYPTED[c2d5a42b615e84e90dac0e5a7a73232d539988265fa0c0950e9ee5ea2bb801ecd1c2e68da0d9fe50f2d5620cf515126d]
     DOCKER_PASSWORD: ENCRYPTED[184f5a9f410792294f5c23193377c5853211f03f7459d57fb9ab85c96c735e58b78e86485c9088b197867a189ebbde41]
   build_script:
-    - .ci\script.bat build
+    - .cirrus.bat build
   deploy_script:
-    - .ci\script.bat deploy
+    - .cirrus.bat deploy

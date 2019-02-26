@@ -35,8 +35,6 @@ $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
 [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
 RUN \
-powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force \
-echo $env:PATH ; \
 pacman --noconfirm -Syu ; \
 pacman --noconfirm -S \
     make \
@@ -62,7 +60,6 @@ pacman --noconfirm -S \
     mingw-w64-x86_64-clang \
     mingw-w64-x86_64-clang-analyzer \
     mingw-w64-x86_64-clang-tools-extra \
-    mingw-w64-x86_64-lldb ; \
-Remove-Item C:\msys2\var\cache\pacman -Force -Recurse
+    mingw-w64-x86_64-lldb
 
 CMD ["cmd"]
