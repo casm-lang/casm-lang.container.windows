@@ -57,13 +57,13 @@ RUN pacman --noconfirm -S \
     mingw-w64-i686-clang-tools-extra \
     mingw-w64-i686-lldb
 
-# RUN pacman --noconfirm -S \
-#     mingw-w64-x86_64-cmake \
-#     mingw-w64-x86_64-gcc \
-#     mingw-w64-x86_64-gdb \
-#     mingw-w64-x86_64-clang \
-#     mingw-w64-x86_64-clang-analyzer \
-#     mingw-w64-x86_64-clang-tools-extra \
-#     mingw-w64-x86_64-lldb
+RUN pacman --noconfirm -S \
+    mingw-w64-x86_64-cmake \
+    mingw-w64-x86_64-gcc \
+    mingw-w64-x86_64-gdb \
+    mingw-w64-x86_64-clang \
+    mingw-w64-x86_64-clang-analyzer \
+    mingw-w64-x86_64-clang-tools-extra \
+    mingw-w64-x86_64-lldb
 
 CMD ["cmd"]
