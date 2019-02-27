@@ -34,9 +34,9 @@ Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse ;
 $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
 [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
+RUN pacman --noconfirm -Syu
 
-
-RUN pacman --noconfirm -Sy \
+RUN pacman --noconfirm -S \
     make \
     bash \
     curl \
@@ -46,7 +46,7 @@ RUN pacman --noconfirm -Sy \
     bison \
     flex \
     python \
-    diff \
+    base-devel \
     mingw-w64-i686-cmake \
     mingw-w64-i686-gcc \
     mingw-w64-i686-gdb \
