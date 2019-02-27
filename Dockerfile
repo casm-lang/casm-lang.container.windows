@@ -34,9 +34,9 @@ Remove-Item C:\Users\ContainerAdministrator\AppData\Local\Temp -Force -Recurse ;
 $env:PATH = 'C:\msys2\usr\bin;' + $env:PATH ; \
 [Environment]::SetEnvironmentVariable( 'PATH', $env:PATH, [EnvironmentVariableTarget]::Machine )
 
-RUN \
-pacman --noconfirm -Syu ; \
-pacman --noconfirm -S \
+
+
+RUN pacman --noconfirm -Sy \
     make \
     bash \
     curl \
