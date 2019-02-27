@@ -46,20 +46,24 @@ RUN pacman --noconfirm -S \
     bison \
     flex \
     python \
-    base-devel \
+    base-devel
+
+RUN pacman --noconfirm -S \
     mingw-w64-i686-cmake \
     mingw-w64-i686-gcc \
     mingw-w64-i686-gdb \
     mingw-w64-i686-clang \
     mingw-w64-i686-clang-analyzer \
     mingw-w64-i686-clang-tools-extra \
-    mingw-w64-i686-lldb \
-    mingw-w64-x86_64-cmake \
-    mingw-w64-x86_64-gcc \
-    mingw-w64-x86_64-gdb \
-    mingw-w64-x86_64-clang \
-    mingw-w64-x86_64-clang-analyzer \
-    mingw-w64-x86_64-clang-tools-extra \
-    mingw-w64-x86_64-lldb
+    mingw-w64-i686-lldb
+
+# RUN pacman --noconfirm -S \
+#     mingw-w64-x86_64-cmake \
+#     mingw-w64-x86_64-gcc \
+#     mingw-w64-x86_64-gdb \
+#     mingw-w64-x86_64-clang \
+#     mingw-w64-x86_64-clang-analyzer \
+#     mingw-w64-x86_64-clang-tools-extra \
+#     mingw-w64-x86_64-lldb
 
 CMD ["cmd"]
