@@ -69,8 +69,6 @@ RUN pacman --noconfirm -S \
 
 FROM microsoft/nanoserver:10.0.14393.1770
 
-WORKDIR C:\\
-
-COPY --from=0 C:\\msys2 .
+COPY --from=0 C:\\msys2 C:\\
 
 CMD ["cmd"]
