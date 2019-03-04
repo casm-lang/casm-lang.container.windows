@@ -67,8 +67,8 @@ RUN pacman --noconfirm -S \
     mingw-w64-x86_64-lldb
 
 
-FROM microsoft/nanoserver:10.0.14393.1770
+# FROM microsoft/nanoserver:10.0.14393.1770
 
-COPY --from=0 c:/msys2 c:/
+# COPY --from=0 c:/msys2 c:/
 
 CMD ["cmd"]
