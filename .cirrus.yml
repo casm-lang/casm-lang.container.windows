@@ -1,9 +1,9 @@
 #
-#   Copyright (C) 2018-2021 CASM Organization <https://casm-lang.org>
+#   Copyright (C) 2018-2022 CASM Organization <https://casm-lang.org>
 #   All rights reserved.
 #
-#   Developed by: Philipp Paulweber
-#                 <https://github.com/casm-lang/casm-lang.container.windows>
+#   Developed by: Philipp Paulweber et al.
+#                 <https://github.com/casm-lang/casm-lang.container.windows/graphs/contributors>
 #
 #   This file is part of casm-lang.container.windows.
 #
